@@ -1,0 +1,42 @@
+Remove references to removed test/tar_manual directory
+
+--- a/configure
++++ b/configure
+@@ -2577,7 +2577,7 @@
+ ac_config_files="$ac_config_files manage_i18n.pl"
+ 
+ 
+-ac_config_files="$ac_config_files Makefile Tests/Makefile test/Makefile test/contents/Makefile test/coverage/Makefile test/formatting/Makefile test/indices/Makefile test/invalid/Makefile test/misc/Makefile test/encodings/Makefile test/macros/Makefile test/manuals/Makefile test/nested_formats/Makefile test/sectionning/Makefile test/htmlxref/Makefile test/htmlxref-only_mono/Makefile test/htmlxref-only_split/Makefile test/xemacs_manual/Makefile test/texi2html_manual/Makefile test/tar_manual/Makefile test/singular_manual/Makefile test/layout/Makefile test/many_input_files/Makefile doc/Makefile"
++ac_config_files="$ac_config_files Makefile Tests/Makefile test/Makefile test/contents/Makefile test/coverage/Makefile test/formatting/Makefile test/indices/Makefile test/invalid/Makefile test/misc/Makefile test/encodings/Makefile test/macros/Makefile test/manuals/Makefile test/nested_formats/Makefile test/sectionning/Makefile test/htmlxref/Makefile test/htmlxref-only_mono/Makefile test/htmlxref-only_split/Makefile test/xemacs_manual/Makefile test/texi2html_manual/Makefile test/singular_manual/Makefile test/layout/Makefile test/many_input_files/Makefile doc/Makefile"
+ 
+ cat >confcache <<\_ACEOF
+ # This file is a shell script that caches the results of configure
+@@ -3177,7 +3177,6 @@
+     "test/htmlxref-only_split/Makefile") CONFIG_FILES="$CONFIG_FILES test/htmlxref-only_split/Makefile" ;;
+     "test/xemacs_manual/Makefile") CONFIG_FILES="$CONFIG_FILES test/xemacs_manual/Makefile" ;;
+     "test/texi2html_manual/Makefile") CONFIG_FILES="$CONFIG_FILES test/texi2html_manual/Makefile" ;;
+-    "test/tar_manual/Makefile") CONFIG_FILES="$CONFIG_FILES test/tar_manual/Makefile" ;;
+     "test/singular_manual/Makefile") CONFIG_FILES="$CONFIG_FILES test/singular_manual/Makefile" ;;
+     "test/layout/Makefile") CONFIG_FILES="$CONFIG_FILES test/layout/Makefile" ;;
+     "test/many_input_files/Makefile") CONFIG_FILES="$CONFIG_FILES test/many_input_files/Makefile" ;;
+--- a/configure.ac
++++ b/configure.ac
+@@ -125,7 +125,6 @@
+                  test/htmlxref-only_split/Makefile \
+                  test/xemacs_manual/Makefile \
+                  test/texi2html_manual/Makefile \
+-                 test/tar_manual/Makefile \
+                  test/singular_manual/Makefile \
+                  test/layout/Makefile \
+                  test/many_input_files/Makefile \
+--- a/test/Makefile.am
++++ b/test/Makefile.am
+@@ -5,7 +5,7 @@
+  nested_formats contents \
+  $(htmlxref_cnf_tests) invalid
+ long_tests = \
+- misc manuals xemacs_manual texi2html_manual tar_manual singular_manual
++ misc manuals xemacs_manual texi2html_manual singular_manual
+ htmlxref_cnf_tests = htmlxref htmlxref-only_mono htmlxref-only_split
+ 
+ DIST_SUBDIRS = $(base_tests) $(long_tests) many_input_files

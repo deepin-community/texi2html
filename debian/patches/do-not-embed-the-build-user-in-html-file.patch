@@ -1,0 +1,21 @@
+From: Vagrant Cascadian <vagrant@reproducible-builds.org>
+Date: Sun, 15 Nov 2020 19:26:28 +0000
+X-Dgit-Generated: 1.82+dfsg1-6 914779331fe9fed1dfd59830fa18994884c00368
+Subject: Do not embed the build user in html files (Closes: #961764).
+
+Bug-Debian: https://bugs.debian.org/961764
+Forwarded: no
+Last-Update: 2020-11-15
+
+---
+
+--- texi2html-1.82+dfsg1.orig/texi2html.pl
++++ texi2html-1.82+dfsg1/texi2html.pl
+@@ -7164,7 +7164,6 @@ sub pass_text($$)
+     $Texi2HTML::THISDOC{'program'} = $THISPROG;
+     $Texi2HTML::THISDOC{'program_homepage'} = $T2H_HOMEPAGE;
+     $Texi2HTML::THISDOC{'program_authors'} = $T2H_AUTHORS;
+-    $Texi2HTML::THISDOC{'user'} = $T2H_USER;
+     $Texi2HTML::THISDOC{'user'} = $Texi2HTML::Config::USER if (defined($Texi2HTML::Config::USER));
+     $Texi2HTML::THISDOC{'authors'} = [] if (!defined($Texi2HTML::THISDOC{'authors'}));
+     $Texi2HTML::THISDOC{'subtitles'} = [] if (!defined($Texi2HTML::THISDOC{'subtitles'}));

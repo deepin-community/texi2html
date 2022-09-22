@@ -1,0 +1,83 @@
+Description: Add --build-date command line flag.
+ Allow create reproducible documentation passing a unix time in the command
+ line.
+Author: Juan Picca <jumapico@gmail.com>
+Last-Update: 2015-05-16
+--- a/T2h_i18n.pm
++++ b/T2h_i18n.pm
+@@ -295,7 +295,14 @@ sub pretty_date($)
+     my $lang = shift;
+     my($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst);
+ 
+-    ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = localtime(time);
++    if (defined $Texi2HTML::Config::BUILD_DATE)
++    {
++        ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = gmtime($Texi2HTML::Config::BUILD_DATE);
++    }
++    else
++    {
++        ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = localtime(time);
++    }
+     $year += ($year < 70) ? 2000 : 1900;
+     # obachman: Let's do it as the Americans do
+     #return($MONTH_NAMES->{$lang}[$mon] . ", " . $mday . " " . $year);
+--- a/texi2html.init
++++ b/texi2html.init
+@@ -260,6 +260,10 @@ $MONOLITHIC = 1;
+ # the specified url are used as stylesheet links
+ @CSS_REFS = ();
+ 
++# -build-date
++# Use the given unix time as build date showing UTC timezone when it is used
++$BUILD_DATE = $ENV{'SOURCE_DATE_EPOCH'};
++
+ ######################
+ # The following options are only relevant if $L2H is set
+ #
+--- a/texi2html.pl
++++ b/texi2html.pl
+@@ -261,6 +261,7 @@ $EXTERNAL_DIR
+ $IGNORE_PREAMBLE_TEXT
+ @CSS_FILES
+ @CSS_REFS
++$BUILD_DATE
+ $INLINE_CONTENTS
+ $INLINE_INSERTCOPYING
+ );
+@@ -2600,6 +2601,13 @@ $T2H_OPTIONS -> {'css-ref'} =
+  verbose => 'generate reference to the CSS URL $s'
+ };
+ 
++$T2H_OPTIONS -> {'build-date'} =
++{
++ type => '=i',
++ linkage => \$Texi2HTML::Config::BUILD_DATE,
++ verbose => 'use the given unix time as build date showing UTC timezone when it is used'
++};
++
+ $T2H_OPTIONS -> {'transliterate-file-names'} =
+ {
+  type => '!',
+--- a/doc/texi2html.texi
++++ b/doc/texi2html.texi
+@@ -523,6 +523,8 @@ Display a short help and exit.
+ Be verbose.
+ @item @longopt{version}
+ Display version information and exit.
++@item @longopt{build-date=@var{unixtime}}
++Use the given unix time as build date showing UTC timezone when it is used.
+ @end table
+ 
+ @c --------------------------------------------------------
+--- a/doc/texi2html.info
++++ b/doc/texi2html.info
+@@ -435,6 +435,9 @@ Miscellaneous general options:
+ `--version'
+      Display version information and exit.
+ 
++`--build-date=UNIXTIME'
++     Use the given unix time as build date showing UTC timezone when it is used.
++
+ 
+ File: texi2html.info,  Node: Splitting output,  Next: Output files,  Prev: General options,  Up: Invoking texi2html
+ 

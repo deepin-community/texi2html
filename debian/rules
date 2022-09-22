@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+p := texi2html
+
+%:
+	dh $@ --with autoreconf
+
+
+override_dh_auto_install:
+	dh_auto_install
+	dh_installdirs usr/share/doc/texi2html
+	mv -v $(CURDIR)/debian/$p/usr/share/texinfo/html \
+	      $(CURDIR)/debian/$p/usr/share/doc/$p/
+	rm $(CURDIR)/debian/$p/usr/share/$p/images/COPYING
+	rm $(CURDIR)/debian/$p/usr/share/$p/images/README
+	rm $(CURDIR)/debian/$p/usr/share/$p/images/GPL
+	rm $(CURDIR)/debian/$p/usr/share/$p/images/COPYING.Attribution-ShareAlike
+	rm -rfv $(CURDIR)/debian/$p/usr/share/texinfo/
+
+override_dh_auto_test:
+	# looks like tests never actually run anyway...

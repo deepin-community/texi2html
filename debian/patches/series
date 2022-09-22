@@ -1,0 +1,6 @@
+01_remove_doc_dir.diff
+02_removed_test_manuals.diff
+03_add_build-date_param.patch
+04_sort-perl-hash
+05_reproducible-build
+do-not-embed-the-build-user-in-html-file.patch

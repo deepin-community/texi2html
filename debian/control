@@ -1,0 +1,23 @@
+Source: texi2html
+Section: text
+Priority: optional
+Maintainer: Debian QA Group <packages@qa.debian.org>
+Build-Depends: debhelper-compat (= 13), texinfo
+Standards-Version: 4.5.0
+Rules-Requires-Root: no
+Homepage: http://www.nongnu.org/texi2html
+
+Package: texi2html
+Architecture: all
+Multi-Arch: foreign
+Depends: libtext-unidecode-perl, ${perl:Depends}, ${misc:Depends}
+Suggests: latex2html
+Description: Convert Texinfo files to HTML
+ texi2html is a Perl script that converts Texinfo files to HTML.
+ .
+ The program takes Texinfo files (not info ones) and produces a set of
+ HTML files.  The quality of the output is close to the printed output
+ and is much better than an info->HTML gateway.
+ .
+ Compared to the output of `makeinfo --html', texi2html's output is
+ more customizable and (subjectively) produces better output by default.

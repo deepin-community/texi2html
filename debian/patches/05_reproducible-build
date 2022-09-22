@@ -1,0 +1,35 @@
+Description: Make the build reproducible
+ + set the PACKAGE_DATE value to SOURCE_DATE_EPOCH if available
+ + sort the list of languages in manage_i18n.pl(.in) to do not depend on readdir() order
+Author: Mattia Rizzolo <mattia@debian.org>
+Author: Reiner Herrmann <reiner@reiner-h.de>
+Bug-Debian: https://bugs.debian.org/783478
+Forwarded: no
+Last-Update: 2015-12-23
+
+--- a/configure.ac
++++ b/configure.ac
+@@ -10,7 +10,11 @@
+ AM_MAINTAINER_MODE
+ 
+ dnl Misc variable settings
+-PACKAGE_DATE=`"$srcdir"/mdate-sh "$srcdir"/configure.ac`
++if test "x$SOURCE_DATE_EPOCH" = "x"; then
++    SOURCE_DATE_EPOCH=`date +%s`
++fi
++fmt="%B %d. %Y"
++PACKAGE_DATE=`date -u -d "@$SOURCE_DATE_EPOCH" "+$fmt" 2>/dev/null || date -u -r "$SOURCE_DATE_EPOCH" "+$fmt" 2>/dev/null || date -u "+$fmt"`
+ AC_SUBST([PACKAGE_DATE])
+ 
+ dnl Checks for programs.
+--- a/manage_i18n.pl.in
++++ b/manage_i18n.pl.in
+@@ -187,7 +187,7 @@
+          }
+     }
+     warn "Remark: the following known languages have no corresponding file: @known\n" if (@known);
+-    return @languages;
++    return sort @languages;
+ }
+ 
+ sub merge_i18n_files($$$)

@@ -1,0 +1,23 @@
+Description: Sort hash values to produce reproducible documentation
+Author: Maria Valentina Marin <marivalenm@gmail.com>
+
+--- a/texi2html.pl
++++ b/texi2html.pl
+@@ -6223,7 +6223,7 @@ sub rearrange_elements()
+     }
+ 
+     # use %sections and %headings to modify also the headings
+-    foreach my $section (values(%sections), values(%headings))
++    foreach my $section (sort values(%sections), sort values(%headings))
+     {
+         if ($Texi2HTML::Config::NEW_CROSSREF_STYLE and ($section->{'cross'} =~ /\S/))
+         {
+@@ -6257,7 +6257,7 @@ sub rearrange_elements()
+     }
+ 
+     # construct human readable tocid
+-    foreach my $section (values(%sections))
++    foreach my $section (sort values(%sections))
+     {
+         if ($Texi2HTML::Config::NEW_CROSSREF_STYLE and ($section->{'cross'} =~ /\S/))
+         {
